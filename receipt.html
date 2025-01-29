@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Receipt</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="logo.webp">
+	<style>
+
+		*{
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			font-family: Arial;
+		}
+
+		body{
+			background: #FBFBFB;
+		}
+
+		header{
+			background-color: #F26B0F;
+			text-align: center;
+			padding: 10px;
+			color: #F5F5F5;
+		}
+
+		.container{
+			width: 80%;
+			max-width: 900px;
+			margin: 0 auto;
+			margin-top: 1.5rem;
+		}
+
+		.receipt-container{
+			box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+			padding: 30px;
+		}
+
+		table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #F26B0F;
+        }
+
+        @media (max-width: 700px) {
+		    header{
+				width: 100%;
+				font-size: 1.2rem;
+			}
+
+			.container{
+				width: 100%;
+			}
+			.receipt-container{
+				width: 100%;
+				box-shadow: none;
+			}
+		}
+
+	</style>
+</head>
+<body>
+
+	<header>
+		<h3>UniResto</h3>
+	</header>
+
+
+	<div class="container">
+		<div class="receipt-container">
+			<h2 style="text-align: center;">Your Order</h2>
+			<ul id="receipt-items"></ul>
+			<div class="table_collection">
+				 <table id="FdTable">
+				 	<tr>
+				 		<th>FOOD</th>
+				 		<th>PRICE</th>
+				 	</tr>
+				 </table>
+				 <div id="totalPrice" style="text-align: right; margin-top: 2rem; font-weight: bold;"></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		
+		const selectedItems = JSON.parse(localStorage.getItem("selectedItems"));
+		const totalAmount = localStorage.getItem("totalAmount");
+		const FdTable = document.getElementById("FdTable");
+		const totalPrice = document.getElementById("totalPrice");
+		const receiptItems = document.getElementById("receipt-items");
+		const amountItems = document.getElementById("total-amount");
+
+		if(selectedItems && totalAmount > 0){
+			selectedItems.forEach(item =>{
+				const newRow = document.createElement('tr');
+
+				const itemCell = document.createElement("td");
+				const priceCell = document.createElement("td");
+
+				itemCell.textContent = item.name;
+				priceCell.textContent = item.price;
+
+				newRow.appendChild(itemCell);
+				newRow.appendChild(priceCell);
+
+				FdTable.appendChild(newRow);
+
+				totalPrice.textContent = `Total Price: ₱${totalAmount}`;
+			});
+		}
+
+	</script>
+
+</body>
+</html>
